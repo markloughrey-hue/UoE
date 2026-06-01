@@ -1,0 +1,489 @@
+<!DOCTYPE html>
+<html lang="en-GB">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>CRED × University of Exeter — Alumni Prospect Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#060807; --surface:#0d120f; --card:#121a15; --card2:#18221c;
+    --border:rgba(255,255,255,0.08); --border-a:rgba(31,180,134,0.28);
+    --text:#ffffff; --muted:rgba(255,255,255,0.55); --muted2:rgba(255,255,255,0.38);
+    --accent:#1fb486; --accent-bright:#2fe0a6; --accent-dim:rgba(31,180,134,0.12);
+    --green:#18c08a; --teal:#34b9d6; --amber:#f5a623; --orange:#e07b39; --grey:#7e8884; --red:#e05656;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    font-family:'Inter',system-ui,sans-serif;background:var(--bg);color:var(--text);
+    line-height:1.5;-webkit-font-smoothing:antialiased;
+    background-image:radial-gradient(circle at 12% -8%,rgba(31,180,134,0.10),transparent 45%),radial-gradient(circle at 100% 0%,rgba(31,180,134,0.05),transparent 38%);
+    background-attachment:fixed;
+  }
+  .wrap{max-width:1320px;margin:0 auto;padding:0 28px 80px}
+
+  /* ---------- Top bar ---------- */
+  .topbar{
+    position:sticky;top:0;z-index:50;background:rgba(6,8,7,0.86);backdrop-filter:blur(14px);
+    border-bottom:1px solid var(--border);
+  }
+  .topbar-in{max-width:1320px;margin:0 auto;padding:14px 28px;display:flex;align-items:center;gap:16px}
+  .logo{display:flex;align-items:center;gap:10px;font-weight:800;letter-spacing:.02em}
+  .logo .sq{width:16px;height:16px;border-radius:4px;background:linear-gradient(135deg,var(--accent),var(--accent-bright));box-shadow:0 0 14px rgba(31,180,134,.5)}
+  .logo .x{color:var(--muted2);font-weight:500;margin:0 2px}
+  .logo .client{font-weight:600;color:var(--muted)}
+  .topbar .spacer{flex:1}
+  .pill{font-size:.62rem;letter-spacing:.09em;text-transform:uppercase;font-weight:700;padding:5px 10px;border-radius:999px;border:1px solid var(--border-a);color:var(--accent-bright);background:var(--accent-dim);white-space:nowrap}
+  .pill.grey{color:var(--muted);border-color:var(--border);background:transparent}
+
+  /* ---------- Hero ---------- */
+  .hero{padding:46px 0 26px}
+  .hero .ey{font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--accent-bright);font-weight:700;margin-bottom:14px}
+  .hero h1{font-size:2.85rem;font-weight:800;letter-spacing:-.03em;line-height:1.06;max-width:900px}
+  .hero h1 em{color:var(--accent-bright);font-style:normal}
+  .hero p{color:var(--muted);max-width:780px;margin-top:16px;font-size:1rem}
+  .hero .note{margin-top:18px;font-size:.74rem;color:var(--muted2);display:flex;align-items:center;gap:8px}
+  .hero .note .dot{width:6px;height:6px;border-radius:50%;background:var(--amber)}
+
+  /* ---------- KPI row ---------- */
+  .kpis{display:grid;grid-template-columns:repeat(4,1fr);gap:16px;margin:26px 0 8px}
+  .kpi{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:18px 18px 16px;position:relative;overflow:hidden}
+  .kpi::after{content:'';position:absolute;left:0;top:0;height:3px;width:100%;background:linear-gradient(90deg,var(--accent),transparent)}
+  .kpi .lab{font-size:.64rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);font-weight:700}
+  .kpi .val{font-size:2rem;font-weight:800;letter-spacing:-.02em;margin-top:6px}
+  .kpi .val small{font-size:1.1rem;color:var(--muted);font-weight:600}
+  .kpi .sub{font-size:.72rem;color:var(--muted);margin-top:4px}
+  .kpi .val em{color:var(--accent-bright);font-style:normal}
+
+  /* ---------- Section ---------- */
+  .sec{margin-top:40px}
+  .sec-h{display:flex;align-items:baseline;gap:12px;margin-bottom:16px}
+  .sec-h h2{font-size:1.45rem;font-weight:700;letter-spacing:-.02em}
+  .sec-h span{font-size:.8rem;color:var(--muted)}
+
+  /* ---------- Main split ---------- */
+  .split{display:grid;grid-template-columns:1.55fr 1fr;gap:20px;align-items:start}
+
+  /* ---------- Table ---------- */
+  .panel{background:var(--card);border:1px solid var(--border);border-radius:16px;overflow:hidden}
+  .panel-top{padding:14px 18px;border-bottom:1px solid var(--border);display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+  .panel-top h3{font-size:.95rem;font-weight:700}
+  .panel-top .hint{font-size:.7rem;color:var(--muted2);margin-left:auto}
+  .filters{display:flex;gap:6px;flex-wrap:wrap}
+  .chip{font-size:.66rem;font-weight:600;padding:5px 11px;border-radius:999px;border:1px solid var(--border);color:var(--muted);cursor:pointer;background:transparent;transition:.15s;white-space:nowrap}
+  .chip:hover{color:var(--text);border-color:var(--border-a)}
+  .chip.on{background:var(--accent-dim);color:var(--accent-bright);border-color:var(--border-a)}
+
+  table{width:100%;border-collapse:collapse}
+  thead th{font-size:.6rem;letter-spacing:.08em;text-transform:uppercase;color:var(--muted2);font-weight:700;text-align:left;padding:11px 14px;border-bottom:1px solid var(--border);cursor:pointer;user-select:none;white-space:nowrap}
+  thead th.num{text-align:right}
+  thead th .arr{opacity:.5;font-size:.7em}
+  tbody tr{border-bottom:1px solid rgba(255,255,255,0.045);cursor:pointer;transition:.12s}
+  tbody tr:last-child{border-bottom:none}
+  tbody tr:hover{background:rgba(31,180,134,0.06)}
+  tbody tr.active{background:var(--accent-dim);box-shadow:inset 3px 0 0 var(--accent)}
+  td{padding:11px 14px;font-size:.8rem;vertical-align:middle}
+  td.num{text-align:right;font-variant-numeric:tabular-nums}
+  .who{display:flex;align-items:center;gap:11px}
+  .av{width:32px;height:32px;border-radius:9px;flex:none;display:flex;align-items:center;justify-content:center;font-size:.66rem;font-weight:800;background:linear-gradient(135deg,#1d2b24,#243a30);color:var(--accent-bright);border:1px solid var(--border)}
+  .who .nm{font-weight:600;font-size:.82rem;line-height:1.2}
+  .who .ttl{font-size:.68rem;color:var(--muted);line-height:1.25}
+  .score-badge{display:inline-flex;align-items:center;justify-content:center;width:30px;height:30px;border-radius:9px;font-weight:800;font-size:.9rem;color:#06140f}
+  .nw{font-weight:700}
+  .prop{display:inline-flex;align-items:center;gap:6px;font-size:.74rem;color:var(--muted)}
+  .prop .bar{width:46px;height:5px;border-radius:3px;background:rgba(255,255,255,.1);overflow:hidden}
+  .prop .bar i{display:block;height:100%;border-radius:3px;background:linear-gradient(90deg,var(--accent),var(--accent-bright))}
+  .flag{display:inline-flex;align-items:center;justify-content:center;width:150px;height:24px;font-size:.58rem;font-weight:700;letter-spacing:.04em;text-transform:uppercase;padding:0 7px;border-radius:5px;background:rgba(245,166,35,.13);color:var(--amber);border:1px solid rgba(245,166,35,.25);white-space:nowrap;text-align:center}
+  .flag.ipo{background:rgba(31,180,134,.13);color:var(--accent-bright);border-color:var(--border-a)}
+
+  /* ---------- Detail panel ---------- */
+  .detail{position:sticky;top:78px}
+  .detail .d-head{padding:20px 20px 16px;border-bottom:1px solid var(--border);display:flex;gap:14px;align-items:flex-start}
+  .detail .av.lg{width:52px;height:52px;border-radius:12px;font-size:1rem}
+  .detail .d-name{font-size:1.12rem;font-weight:800;letter-spacing:-.01em}
+  .detail .d-ttl{font-size:.78rem;color:var(--muted);margin-top:2px}
+  .detail .d-meta{font-size:.7rem;color:var(--muted2);margin-top:7px;display:flex;gap:10px;flex-wrap:wrap}
+  .detail .d-meta b{color:var(--muted);font-weight:600}
+  .d-score{margin-left:auto;text-align:center;flex:none}
+  .d-score .big{font-size:2.4rem;font-weight:900;line-height:1;letter-spacing:-.03em}
+  .d-score .of{font-size:.62rem;color:var(--muted2);letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+  .d-body{padding:18px 20px 22px}
+  .d-lab{font-size:.62rem;letter-spacing:.1em;text-transform:uppercase;color:var(--muted2);font-weight:700;margin:4px 0 12px}
+  .driver{margin-bottom:13px}
+  .driver .dr-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:5px}
+  .driver .dr-name{font-size:.76rem;font-weight:600}
+  .driver .dr-name span{color:var(--muted2);font-weight:500;font-size:.92em}
+  .driver .dr-val{font-size:.72rem;font-weight:700;font-variant-numeric:tabular-nums;color:var(--muted)}
+  .track{height:7px;border-radius:4px;background:rgba(255,255,255,.07);overflow:hidden}
+  .track i{display:block;height:100%;border-radius:4px;transition:width .5s cubic-bezier(.2,.8,.2,1)}
+  .d-signals{margin-top:18px}
+  .sig{display:flex;gap:9px;align-items:flex-start;font-size:.76rem;color:var(--muted);padding:7px 0;border-top:1px solid rgba(255,255,255,.05)}
+  .sig:first-of-type{border-top:none}
+  .sig .ic{color:var(--accent-bright);font-weight:800;flex:none;margin-top:1px}
+  .d-foot{margin-top:18px;padding:13px 14px;background:var(--card2);border:1px solid var(--border);border-radius:11px;font-size:.74rem;color:var(--muted)}
+  .d-foot b{color:var(--text)}
+  .empty{padding:40px 24px;text-align:center;color:var(--muted2);font-size:.82rem}
+
+  /* ---------- IPO screen ---------- */
+  .g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+  .ipo-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:16px;transition:.15s}
+  .ipo-card:hover{border-color:var(--border-a)}
+  .ipo-card .co{display:flex;justify-content:space-between;align-items:flex-start;gap:8px}
+  .ipo-card .co-nm{font-weight:700;font-size:.92rem}
+  .ipo-card .co-sec{font-size:.68rem;color:var(--muted2);margin-top:1px}
+  .readiness{font-size:.6rem;font-weight:800;padding:3px 8px;border-radius:6px;white-space:nowrap}
+  .ipo-card .row{display:flex;justify-content:space-between;font-size:.74rem;color:var(--muted);margin-top:12px}
+  .ipo-card .row b{color:var(--text);font-weight:700}
+  .ipo-card .alum{margin-top:12px;padding-top:11px;border-top:1px solid var(--border);font-size:.74rem}
+  .ipo-card .alum b{color:var(--accent-bright)}
+
+  /* ---------- Methodology ---------- */
+  .method{display:grid;grid-template-columns:repeat(4,1fr);gap:14px}
+  .step{background:var(--card);border:1px solid var(--border);border-radius:13px;padding:16px;position:relative}
+  .step .n{font-size:.62rem;font-weight:800;color:var(--accent-bright);letter-spacing:.1em}
+  .step h4{font-size:.86rem;font-weight:700;margin:7px 0 6px}
+  .step p{font-size:.74rem;color:var(--muted);line-height:1.5}
+  .step .arr{position:absolute;right:-11px;top:50%;transform:translateY(-50%);color:var(--muted2);font-size:1rem;z-index:2}
+  .step:last-child .arr{display:none}
+
+  .callout{margin-top:18px;background:linear-gradient(135deg,rgba(31,180,134,.10),rgba(31,180,134,.02));border:1px solid var(--border-a);border-radius:14px;padding:20px 22px;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+  .callout .c-txt{flex:1;min-width:280px}
+  .callout h3{font-size:1.05rem;font-weight:800}
+  .callout p{font-size:.82rem;color:var(--muted);margin-top:6px;max-width:640px}
+  .callout .c-stat{text-align:center;padding:0 14px}
+  .callout .c-stat .v{font-size:1.7rem;font-weight:900;color:var(--accent-bright);letter-spacing:-.02em}
+  .callout .c-stat .l{font-size:.62rem;text-transform:uppercase;letter-spacing:.08em;color:var(--muted2);font-weight:700;margin-top:2px}
+
+  /* ---------- Footer ---------- */
+  footer{margin-top:48px;padding-top:22px;border-top:1px solid var(--border);display:flex;justify-content:space-between;align-items:center;gap:18px;flex-wrap:wrap}
+  footer .f-l{font-size:.72rem;color:var(--muted2);max-width:680px;line-height:1.5}
+  footer .f-r{display:flex;gap:8px;align-items:center}
+  .badge{font-size:.6rem;font-weight:700;letter-spacing:.05em;color:var(--muted);border:1px solid var(--border);padding:5px 9px;border-radius:7px}
+
+  @media(max-width:1080px){
+    .split{grid-template-columns:1fr}.detail{position:static}
+    .kpis{grid-template-columns:1fr 1fr}.method{grid-template-columns:1fr 1fr}.g3{grid-template-columns:1fr 1fr}
+    .hero h1{font-size:2.2rem}
+  }
+  @media(max-width:640px){
+    .kpis,.method,.g3{grid-template-columns:1fr}
+    td.hidem,th.hidem{display:none}
+  }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-in">
+    <div class="logo"><span class="sq"></span>CRED<span class="x">×</span><span class="client">University of Exeter</span></div>
+    <div class="spacer"></div>
+    <span class="pill">Alumni Prospect Intelligence</span>
+    <span class="pill grey">Illustrative sample</span>
+  </div>
+</div>
+
+<div class="wrap">
+
+  <!-- HERO -->
+  <section class="hero">
+    <div class="ey">Predictive Development &amp; Alumni Intelligence</div>
+    <h1>You already know <em>who</em> your alumni are.<br>CRED predicts <em>who to engage, and when</em>.</h1>
+    <p>Your team is excellent at finding people. The hard part — and the expensive part to build — is modelling the future: scoring every alum on giving potential and surfacing the liquidity events that turn a quiet name into a transformational donor. This is a sample of that scoring layer applied to Exeter.</p>
+    <div class="note"><span class="dot"></span>Demonstration data — names, companies and figures are illustrative. The live model is built on your matched first‑party data plus CRED's intelligence graph.</div>
+  </section>
+
+  <!-- KPIs -->
+  <div class="kpis">
+    <div class="kpi"><div class="lab">Alumni profiled</div><div class="val">142,800</div><div class="sub">matched &amp; enriched from first‑party records</div></div>
+    <div class="kpi"><div class="lab">Priority prospects</div><div class="val"><em>318</em></div><div class="sub">CRED score 8.0+ — currently unengaged: 71%</div></div>
+    <div class="kpi"><div class="lab">Predicted giving capacity</div><div class="val">£<em>96</em><small>m</small></div><div class="sub">5‑yr modelled capacity, top‑decile cohort</div></div>
+    <div class="kpi"><div class="lab">Pre‑IPO alumni</div><div class="val">47</div><div class="sub">at companies modelled to list within 36 months</div></div>
+  </div>
+
+  <!-- MAIN SPLIT -->
+  <section class="sec">
+    <div class="sec-h"><h2>Ranked alumni — CRED Score</h2><span>Click any name to see what drives the score</span></div>
+    <div class="split">
+      <!-- TABLE -->
+      <div class="panel">
+        <div class="panel-top">
+          <h3>Top prospect cohort</h3>
+          <div class="filters" id="filters">
+            <button class="chip on" data-f="all">All</button>
+            <button class="chip" data-f="ipo">Pre‑IPO signal</button>
+            <button class="chip" data-f="founder">Founders</button>
+            <button class="chip" data-f="pe">PE / Finance</button>
+            <button class="chip" data-f="rising">Rising (under 35)</button>
+          </div>
+          <span class="hint">Sortable ↓</span>
+        </div>
+        <table id="tbl">
+          <thead>
+            <tr>
+              <th data-sort="score" class="num">Score<span class="arr">▼</span></th>
+              <th data-sort="name">Alum / Role</th>
+              <th data-sort="sector" class="hidem">Sector</th>
+              <th data-sort="nw" class="num hidem">Pred. net worth</th>
+              <th data-sort="prop" class="num">Propensity</th>
+              <th>Signal</th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+      </div>
+
+      <!-- DETAIL -->
+      <div class="panel detail" id="detail">
+        <div class="empty">Select an alum to view their score breakdown.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- IPO SCREEN -->
+  <section class="sec">
+    <div class="sec-h"><h2>IPO screening — where the next big donors are forming</h2><span>Exeter alumni at companies modelled to list soon</span></div>
+    <div class="g3" id="ipoGrid"></div>
+  </section>
+
+  <!-- METHODOLOGY -->
+  <section class="sec">
+    <div class="sec-h"><h2>How the CRED Score is built</h2><span>Retrospective donor patterns → forward‑looking lens across your whole database</span></div>
+    <div class="method">
+      <div class="step"><span class="arr">→</span><div class="n">01</div><h4>Match &amp; enrich</h4><p>Your first‑party records (name, email, graduation year, course) are matched to CRED's graph — 900M+ executive profiles, 70M+ companies. ~85%+ match rate, no data retained.</p></div>
+      <div class="step"><span class="arr">→</span><div class="n">02</div><h4>Learn from past donors</h4><p>We model your last 5–10 years of giving to find the traits that actually predict a gift — founding age, sector, city, role tenure, student affinity.</p></div>
+      <div class="step"><span class="arr">→</span><div class="n">03</div><h4>Score the database</h4><p>That lens is applied to every alum from the day they graduate — a live 1–10 score, re‑calculated as careers move and liquidity events approach.</p></div>
+      <div class="step"><div class="n">04</div><h4>Trigger engagement</h4><p>Job changes, board seats, fundraising rounds and pre‑IPO signals push alumni up the list automatically — so you engage three years early, not three years late.</p></div>
+    </div>
+
+    <div class="callout">
+      <div class="c-txt">
+        <h3>The score sharpens the moment your internal data goes in</h3>
+        <p>This sample runs on CRED's data alone. When Exeter's giving history and engagement records are matched in, the model learns what makes <em>an Exeter alum</em> give — and the predictive accuracy steps up materially. Fully GDPR &amp; SOC 2 compliant; your data is matched and returned, never retained.</p>
+      </div>
+      <div class="c-stat"><div class="v">3 yrs</div><div class="l">earlier engagement</div></div>
+      <div class="c-stat"><div class="v">71%</div><div class="l">priority names unengaged</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div class="f-l"><b style="color:var(--text)">Illustrative demonstration.</b> Alumni names, companies, net‑worth and propensity figures are fabricated for the purpose of showing the CRED scoring model and are not real Exeter data. Prepared by CRED for the University of Exeter Development &amp; Alumni Relations team.</div>
+    <div class="f-r"><span class="badge">SOC 2 Type 1</span><span class="badge">GDPR compliant</span><span class="badge">credinvestments.com</span></div>
+  </footer>
+
+</div>
+
+<script>
+/* ---------------- DATA (illustrative) ---------------- */
+const DRIVERS = [
+  {k:'seniority', label:'Seniority &amp; influence'},
+  {k:'wealth',    label:'Wealth signal'},
+  {k:'liquidity', label:'Liquidity / IPO proximity'},
+  {k:'sector',    label:'Sector multiplier'},
+  {k:'tenure',    label:'Tenure &amp; trajectory'},
+  {k:'affinity',  label:'Student affinity &amp; interests'}
+];
+
+const A = [
+  {nm:'James Whitcombe',init:'JW',grad:2004,course:'Economics',ttl:'Chief Financial Officer',co:'Helio Health (pre‑IPO)',sector:'Finance',rising:false,founder:false,ipo:true,pe:true,
+   nw:'£42m',prop:94,score:9.7,
+   br:{seniority:10,wealth:9,liquidity:10,sector:9,tenure:8,affinity:7},
+   sigs:['CFO steering a confidential S‑1 — listing modelled within 12 months; equity stake would convert to ~£40m+ liquidity.','19 years post‑graduation, four C‑suite roles — textbook major‑gift trajectory.','Captained 1st XV at Exeter; still follows club rugby closely — strong affinity hook for sport‑linked appeals.']},
+
+  {nm:'Priya Nandakumar',init:'PN',grad:2009,course:'Engineering',ttl:'Founder &amp; CEO',co:'Cordal AI',sector:'Technology',rising:false,founder:true,ipo:true,pe:false,
+   nw:'£58m',prop:91,score:9.4,
+   br:{seniority:9,wealth:10,liquidity:9,sector:10,tenure:7,affinity:8},
+   sigs:['Founder of a fast‑scaling AI firm; Series C closed, IPO chatter in sector press.','Founder‑before‑30 profile — the single strongest donor‑propensity trait in the retrospective model.','Mentors on Exeter\'s entrepreneurship programme — warm, already‑engaged relationship.']},
+
+  {nm:'Edward Calloway',init:'EC',grad:2001,course:'Law',ttl:'Partner',co:'Brookmere Capital',sector:'Private Equity',rising:false,founder:false,ipo:false,pe:true,
+   nw:'£71m',prop:89,score:9.1,
+   br:{seniority:10,wealth:10,liquidity:6,sector:9,tenure:9,affinity:6},
+   sigs:['Partner at a mid‑market PE firm — carried interest realisations drive episodic high‑value giving.','24 years\' tenure, long carry cycles; net worth modelled in the top 0.5% of the cohort.','Sits on two charitable boards — demonstrated philanthropic behaviour.']},
+
+  {nm:'Sarah Beaumont',init:'SB',grad:2007,course:'Finance',ttl:'Managing Director',co:'Lyttelton & Co.',sector:'Investment Banking',rising:false,founder:false,ipo:false,pe:true,
+   nw:'£28m',prop:84,score:8.6,
+   br:{seniority:9,wealth:8,liquidity:6,sector:9,tenure:8,affinity:7},
+   sigs:['MD in leveraged finance — high, stable compensation and bonus cycles.','Consistent LinkedIn engagement with Exeter Business School content.','Recently relocated to Singapore — aligns with your South‑East Asia giving corridor.']},
+
+  {nm:'Daniel Osei',init:'DO',grad:2011,course:'Computer Science',ttl:'Co‑Founder &amp; CTO',co:'Vantage Robotics',sector:'Technology',rising:false,founder:true,ipo:true,pe:false,
+   nw:'£33m',prop:82,score:8.4,
+   br:{seniority:8,wealth:8,liquidity:9,sector:10,tenure:6,affinity:6},
+   sigs:['Co‑founder of a deep‑tech firm flagged on the IPO‑readiness screen (24–36 months).','Equity‑heavy net worth — liquidity event would be transformational.','Engage now: three years pre‑listing is the optimal cultivation window.']},
+
+  {nm:'Charlotte Ferris',init:'CF',grad:2013,course:'Politics',ttl:'VP, Strategy',co:'Northwind Energy',sector:'Energy',rising:false,founder:false,ipo:false,pe:false,
+   nw:'£12m',prop:73,score:7.4,
+   br:{seniority:7,wealth:6,liquidity:5,sector:7,tenure:7,affinity:8},
+   sigs:['Senior operator on a fast trajectory; VP at 33, options vesting through 2027.','High student affinity — held a scholarship, strong sentiment toward the University.','Mid‑tier today, but slope of trajectory flags her as a future major‑gift prospect.']},
+
+  {nm:'Marcus Lindqvist',init:'ML',grad:2006,course:'Mathematics',ttl:'Portfolio Manager',co:'Aldgate Asset Mgmt',sector:'Hedge Fund',rising:false,founder:false,ipo:false,pe:true,
+   nw:'£24m',prop:70,score:7.1,
+   br:{seniority:8,wealth:8,liquidity:5,sector:8,tenure:7,affinity:4},
+   sigs:['PM running a sizeable book — strong but variable income.','Low affinity score — limited engagement history; needs a relationship‑building approach.','Based in Switzerland — aligns with your Swiss giving corridor.']},
+
+  {nm:'Helena Vossberg',init:'HV',grad:2008,course:'Medicine',ttl:'Senior Partner',co:'Castlereagh Legal',sector:'Professional Services',rising:false,founder:false,ipo:false,pe:false,
+   nw:'£16m',prop:66,score:6.5,
+   br:{seniority:8,wealth:7,liquidity:4,sector:6,tenure:8,affinity:5},
+   sigs:['Equity partner with steady high earnings; reliable annual‑fund candidate.','Limited liquidity catalysts — model best for sustained giving, not a single transformational gift.','Attends regional alumni events — moderate, maintainable affinity.']},
+
+  {nm:'Tom Adeyemi',init:'TA',grad:2016,course:'Business',ttl:'Associate',co:'Brookmere Capital',sector:'Private Equity',rising:true,founder:false,ipo:false,pe:true,
+   nw:'£3.2m',prop:58,score:5.2,
+   br:{seniority:4,wealth:4,liquidity:3,sector:9,tenure:5,affinity:7},
+   sigs:['Junior in PE — low today, but the sector multiplier and trajectory mark him as a track‑for‑the‑future name.','This is the cohort manual research treats as "all the same" — the model separates the future partners early.','Strong student affinity; recently re‑connected on the alumni platform.']},
+
+  {nm:'Rebecca Stowe',init:'RS',grad:2014,course:'Marketing',ttl:'Director',co:'Stowe Family Holdings',sector:'Property',rising:false,founder:false,ipo:false,pe:false,
+   nw:'£9m',prop:55,score:5.0,
+   br:{seniority:6,wealth:7,liquidity:3,sector:5,tenure:6,affinity:4},
+   sigs:['Director in a family property business — illiquid wealth, longer cultivation horizon.','Inheritance signal flagged — capacity may step up over the next decade.','Modest engagement; affinity‑building recommended before any ask.']},
+
+  {nm:'Olu Bankole',init:'OB',grad:2018,course:'Data Science',ttl:'Senior Engineer',co:'Vantage Robotics',sector:'Technology',rising:true,founder:false,ipo:true,pe:false,
+   nw:'£2.1m',prop:49,score:4.6,
+   br:{seniority:3,wealth:3,liquidity:8,sector:9,tenure:4,affinity:5},
+   sigs:['Early‑career but holds equity at a pre‑IPO firm — liquidity could re‑rate him sharply upward.','Watch‑list candidate: a single listing event moves him from a 4.6 to a 7+.','Demonstrates the value of scoring the long tail, not just the obvious senior names.']},
+
+  {nm:'Grace Hollingworth',init:'GH',grad:2012,course:'Chemistry',ttl:'Head of Product',co:'Meridian Bio',sector:'Biotech',rising:false,founder:false,ipo:true,pe:false,
+   nw:'£7m',prop:52,score:4.9,
+   br:{seniority:6,wealth:5,liquidity:7,sector:7,tenure:6,affinity:3},
+   sigs:['Senior at a biotech on the IPO screen; option value uncertain pending listing.','Low affinity — minimal contact since graduation; relationship work needed.','Sector flagged as volatile — model widens the confidence band on capacity.']},
+
+  {nm:'Henry Castle',init:'HC',grad:2019,course:'History',ttl:'Analyst',co:'Lyttelton & Co.',sector:'Investment Banking',rising:true,founder:false,ipo:false,pe:true,
+   nw:'£0.8m',prop:34,score:3.3,
+   br:{seniority:2,wealth:2,liquidity:2,sector:8,tenure:3,affinity:6},
+   sigs:['Early‑career analyst — scored low now, but flagged "rising" on sector and engagement.','Good affinity for an annual‑fund / young‑alumni programme today; long‑horizon major‑gift watch.','Illustrates the full 1–10 spread the model produces across a single database.']}
+];
+
+const IPO = [
+  {co:'Helio Health',sec:'Digital Health',ready:88,window:'< 12 months',alumni:6,names:'incl. James Whitcombe (CFO)'},
+  {co:'Cordal AI',sec:'Artificial Intelligence',ready:81,window:'12–24 months',alumni:4,names:'incl. Priya Nandakumar (Founder)'},
+  {co:'Vantage Robotics',sec:'Deep Tech',ready:74,window:'24–36 months',alumni:9,names:'incl. Osei (CTO), Bankole'},
+  {co:'Meridian Bio',sec:'Biotech',ready:69,window:'18–30 months',alumni:5,names:'incl. Grace Hollingworth'},
+  {co:'Northwind Energy',sec:'Clean Energy',ready:63,window:'30–36 months',alumni:7,names:'incl. Charlotte Ferris (VP)'},
+  {co:'Brightline Pay',sec:'Fintech',ready:58,window:'36 months+',alumni:3,names:'3 alumni in senior roles'}
+];
+
+/* ---------------- HELPERS ---------------- */
+function scoreColour(s){
+  if(s>=9) return '#18c08a';
+  if(s>=7.5) return '#3fb6d6';
+  if(s>=6) return '#34b9d6';
+  if(s>=4.5) return '#f5a623';
+  if(s>=3.5) return '#e07b39';
+  return '#7e8884';
+}
+function readyColour(r){
+  if(r>=80) return {bg:'rgba(24,192,138,.15)',c:'#18c08a'};
+  if(r>=65) return {bg:'rgba(52,185,214,.15)',c:'#34b9d6'};
+  return {bg:'rgba(245,166,35,.15)',c:'#f5a623'};
+}
+
+/* ---------------- TABLE RENDER ---------------- */
+let sortKey='score', sortDir=-1, filter='all', activeIdx=null;
+const rowsEl=document.getElementById('rows');
+
+function passesFilter(a){
+  if(filter==='all') return true;
+  if(filter==='ipo') return a.ipo;
+  if(filter==='founder') return a.founder;
+  if(filter==='pe') return a.pe;
+  if(filter==='rising') return a.rising;
+  return true;
+}
+function sortVal(a){
+  if(sortKey==='name') return a.nm.toLowerCase();
+  if(sortKey==='sector') return a.sector.toLowerCase();
+  if(sortKey==='nw') return parseFloat(a.nw.replace(/[£m]/g,''));
+  if(sortKey==='prop') return a.prop;
+  return a.score;
+}
+function renderTable(){
+  const list=A.filter(passesFilter).sort((x,y)=>{
+    const vx=sortVal(x),vy=sortVal(y);
+    if(vx<vy) return -1*sortDir; if(vx>vy) return 1*sortDir; return 0;
+  });
+  rowsEl.innerHTML=list.map(a=>{
+    const i=A.indexOf(a);
+    const col=scoreColour(a.score);
+    let flag='';
+    if(a.ipo) flag='<span class="flag ipo">Pre‑IPO</span>';
+    else if(a.founder) flag='<span class="flag">Founder</span>';
+    else if(a.rising) flag='<span class="flag">Rising</span>';
+    else flag='<span class="flag" style="background:rgba(255,255,255,.05);color:var(--muted);border-color:var(--border)">'+a.sector+'</span>';
+    return `<tr data-i="${i}" class="${i===activeIdx?'active':''}">
+      <td class="num"><span class="score-badge" style="background:${col}">${a.score.toFixed(1)}</span></td>
+      <td><div class="who"><div class="av">${a.init}</div><div><div class="nm">${a.nm}</div><div class="ttl">${a.ttl} · ${a.co}</div></div></div></td>
+      <td class="hidem"><span style="font-size:.74rem;color:var(--muted)">${a.sector}</span></td>
+      <td class="num hidem"><span class="nw">${a.nw}</span></td>
+      <td class="num"><span class="prop"><span class="bar"><i style="width:${a.prop}%"></i></span>${a.prop}%</span></td>
+      <td>${flag}</td>
+    </tr>`;
+  }).join('');
+  rowsEl.querySelectorAll('tr').forEach(tr=>tr.onclick=()=>selectAlum(+tr.dataset.i));
+}
+
+/* ---------------- DETAIL RENDER ---------------- */
+const detailEl=document.getElementById('detail');
+function selectAlum(i){
+  activeIdx=i; const a=A[i]; const col=scoreColour(a.score);
+  detailEl.innerHTML=`
+    <div class="d-head">
+      <div class="av lg">${a.init}</div>
+      <div>
+        <div class="d-name">${a.nm}</div>
+        <div class="d-ttl">${a.ttl} · ${a.co}</div>
+        <div class="d-meta"><span><b>Class of</b> ${a.grad}</span><span><b>${a.course}</b></span><span><b>Sector</b> ${a.sector}</span></div>
+      </div>
+      <div class="d-score"><div class="big" style="color:${col}">${a.score.toFixed(1)}</div><div class="of">/ 10</div></div>
+    </div>
+    <div class="d-body">
+      <div class="d-lab">Score composition</div>
+      ${DRIVERS.map(d=>{
+        const v=a.br[d.k]; const c=v>=8?'#18c08a':v>=6?'#34b9d6':v>=4?'#f5a623':'#e07b39';
+        return `<div class="driver">
+          <div class="dr-top"><span class="dr-name">${d.label}</span><span class="dr-val">${v.toFixed(1)}</span></div>
+          <div class="track"><i style="width:${v*10}%;background:${c}"></i></div>
+        </div>`;
+      }).join('')}
+      <div class="d-signals">
+        <div class="d-lab" style="margin-top:18px">Why this score — key signals</div>
+        ${a.sigs.map(s=>`<div class="sig"><span class="ic">→</span><span>${s}</span></div>`).join('')}
+      </div>
+      <div class="d-foot">Predicted net worth <b>${a.nw}</b> · giving propensity <b>${a.prop}%</b>. Scores recalculate automatically as roles change and liquidity events approach.</div>
+    </div>`;
+  renderTable();
+}
+
+/* ---------------- IPO RENDER ---------------- */
+document.getElementById('ipoGrid').innerHTML=IPO.map(c=>{
+  const rc=readyColour(c.ready);
+  return `<div class="ipo-card">
+    <div class="co"><div><div class="co-nm">${c.co}</div><div class="co-sec">${c.sec}</div></div>
+      <span class="readiness" style="background:${rc.bg};color:${rc.c}">${c.ready} IPO‑ready</span></div>
+    <div class="row"><span>Listing window</span><b>${c.window}</b></div>
+    <div class="alum">Exeter alumni identified: <b>${c.alumni}</b><br><span style="color:var(--muted2)">${c.names}</span></div>
+  </div>`;
+}).join('');
+
+/* ---------------- EVENTS ---------------- */
+document.querySelectorAll('thead th[data-sort]').forEach(th=>{
+  th.onclick=()=>{
+    const k=th.dataset.sort;
+    if(sortKey===k){sortDir*=-1;} else {sortKey=k; sortDir=(k==='name'||k==='sector')?1:-1;}
+    document.querySelectorAll('thead th .arr').forEach(a=>a.remove());
+    const arr=document.createElement('span');arr.className='arr';arr.textContent=sortDir===1?'▲':'▼';th.appendChild(arr);
+    renderTable();
+  };
+});
+document.getElementById('filters').querySelectorAll('.chip').forEach(ch=>{
+  ch.onclick=()=>{
+    document.querySelectorAll('#filters .chip').forEach(c=>c.classList.remove('on'));
+    ch.classList.add('on'); filter=ch.dataset.f; renderTable();
+  };
+});
+
+/* ---------------- INIT ---------------- */
+renderTable();
+selectAlum(0);
+</script>
+</body>
+</html>
